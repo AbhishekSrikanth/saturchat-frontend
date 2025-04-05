@@ -1,6 +1,40 @@
+import { useAuth } from '../context/useAuth';
+
 export default function ProfilePage() {
-    return (
-      <div className="text-xl text-center">Profile Page (avatar + LLM keys)</div>
-      );
-  }
-  
+  const { user } = useAuth();
+
+  return (
+    <div className="max-w-md mx-auto mt-12 p-6 bg-white dark:bg-gray-800 shadow-lg rounded">
+      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Your Profile</h2>
+
+      <div className="space-y-4">
+        <ProfileField label="Username" value={user?.username} />
+        <ProfileField label="Email" value={user?.email || 'Not provided'} />
+        <ProfileField label="First Name" value={user?.first_name || '—'} />
+        <ProfileField label="Last Name" value={user?.last_name || '—'} />
+      </div>
+
+      <div className="mt-6">
+        <button
+          disabled
+          className="px-4 py-2 text-sm bg-gray-400 text-white rounded cursor-not-allowed"
+        >
+          Edit (coming soon)
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ProfileField({ label, value }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        {label}
+      </label>
+      <div className="px-3 py-2 border rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white">
+        {value}
+      </div>
+    </div>
+  );
+}
