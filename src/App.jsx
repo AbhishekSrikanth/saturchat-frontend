@@ -4,17 +4,25 @@ import RegisterPage from './pages/RegisterPage';
 import ChatLayout from './layouts/ChatLayout';
 import ChatPage from './pages/ChatPage';
 import ProfilePage from './pages/ProfilePage';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Routes */}
+        {/* Public */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        {/* Protected Routes - logic added later */}
-        <Route path="/" element={<ChatLayout />}>
+        {/* Private - wrap layout in PrivateRoute */}
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <ChatLayout />
+            </PrivateRoute>
+          }
+        >
           <Route index element={<ChatPage />} />
           <Route path="chat/:id" element={<ChatPage />} />
           <Route path="profile" element={<ProfilePage />} />
