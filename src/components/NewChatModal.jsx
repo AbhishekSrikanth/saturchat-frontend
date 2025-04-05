@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { createConversation, searchUsers } from '../services/chat';
 import { useNavigate } from 'react-router-dom';
 
-export default function NewChatModal({ isOpen, onClose }) {
+export default function NewChatModal({ isOpen, onClose, onCreated }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -44,6 +44,7 @@ export default function NewChatModal({ isOpen, onClose }) {
         name: isGroup ? groupName : undefined,
       });
 
+      if (onCreated) onCreated();
       onClose();
       navigate(`/chat/${conversation.id}`);
     } catch (err) {
