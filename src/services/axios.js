@@ -9,4 +9,13 @@ const api = axios.create({
   },
 });
 
+// Attach token if available
+api.interceptors.request.use((config) => {
+  const tokens = JSON.parse(localStorage.getItem('tokens'));
+  if (tokens?.access) {
+    config.headers.Authorization = `Bearer ${tokens.access}`;
+  }
+  return config;
+});
+
 export default api;
