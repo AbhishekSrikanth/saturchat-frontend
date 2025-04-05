@@ -1,7 +1,7 @@
-import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewChatModal from './NewChatModal';
+import ConversationItem from './ConversationItem';
 
 
 export default function ChatSidebar({ conversations, refreshConversations }) {
@@ -25,19 +25,7 @@ export default function ChatSidebar({ conversations, refreshConversations }) {
             <p className="text-sm text-gray-500 dark:text-gray-400">No conversations yet.</p>
           ) : (
             conversations.map((chat) => (
-              <NavLink
-                key={chat.id}
-                to={`/chat/${chat.id}`}
-                className={({ isActive }) =>
-                  `block px-4 py-2 rounded text-sm truncate ${
-                    isActive
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800'
-                  }`
-                }
-              >
-                {chat.name || `Conversation ${chat.id}`}
-              </NavLink>
+              <ConversationItem key={chat.id} conversation={chat} />
             ))
           )}
         </div>
