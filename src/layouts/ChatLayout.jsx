@@ -4,10 +4,10 @@ import TopBar from '../components/TopBar';
 
 export default function ChatLayout() {
   return (
-    <div className="flex h-screen">
-      <ChatSidebar />
-      <div className="flex-1 flex flex-col">
-        <TopBar />
+    <div className="flex flex-col h-screen">
+      <TopBar />
+      <div className="flex flex-1">
+        <ChatSidebar />
         <div className="flex-1 p-4 overflow-y-auto">
           <Outlet />
         </div>
@@ -15,3 +15,4 @@ export default function ChatLayout() {
     </div>
   );
 }
+
