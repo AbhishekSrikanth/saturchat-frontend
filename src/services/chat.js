@@ -14,3 +14,9 @@ export async function createConversation(data) {
     const res = await api.post('/api/chat/conversations/', data);
     return res.data;
 }
+
+export async function getMessages(conversationId) {
+    const res = await api.get(`/api/chat/conversations/${conversationId}/messages/`);
+    return res.data;
+  }
+  
