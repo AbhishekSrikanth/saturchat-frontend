@@ -14,8 +14,8 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
     try {
-      const tokens = await loginUser({ username, password });
-      login({ username }, tokens);
+      const { access, refresh, user } = await loginUser({ username, password });
+      login(user, { access, refresh }); // ← store full user object + tokens
       navigate('/');
     } catch (err) {
       setError('Invalid credentials');
