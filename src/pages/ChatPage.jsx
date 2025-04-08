@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '../context/useAuth';
 import { getMessages } from '../services/chat';
 import { useChatSocket } from '../hooks/useChatSocket';
@@ -44,8 +44,17 @@ export default function ChatPage() {
     }
   };
 
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full max-h-full relative">
+      {/* Message list */}
       <div className="flex-1 overflow-y-auto space-y-4 p-4">
         {loading ? (
           <p className="text-sm text-gray-500 dark:text-gray-400">Loading messages...</p>
@@ -71,9 +80,14 @@ export default function ChatPage() {
             </div>
           ))
         )}
+        <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={handleSend} className="p-4 border-t dark:border-gray-700 flex gap-2">
+      {/* Input bar pinned to bottom */}
+      <form
+        onSubmit={handleSend}
+        className="p-4 border-t dark:border-gray-700 flex gap-2 bg-white dark:bg-gray-900"
+      >
         <input
           type="text"
           value={input}
