@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '../context/useAuth';
 import { getMessages } from '../services/chat';
 import { useChatSocket } from '../hooks/useChatSocket';
+import NoConversationSelected from '../components/NoConversationSelected';
 import dayjs from 'dayjs';
 
 export default function ChatPage() {
@@ -52,13 +53,7 @@ export default function ChatPage() {
     }
   }, [messages]);
 
-  if (!conversationId) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full text-gray-500 dark:text-gray-400">
-        <p className="text-lg">Select a conversation to start chatting</p>
-      </div>
-    );
-  }
+  if (!conversationId) return <NoConversationSelected />;
 
   return (
     <div className="flex flex-col h-full max-h-full relative">
