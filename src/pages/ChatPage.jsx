@@ -52,6 +52,14 @@ export default function ChatPage() {
     }
   }, [messages]);
 
+  if (!conversationId) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full text-gray-500 dark:text-gray-400">
+        <p className="text-lg">Select a conversation to start chatting</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full max-h-full relative">
       {/* Message list */}
