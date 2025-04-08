@@ -8,27 +8,28 @@ import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Public */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-
-        {/* Private - wrap layout in PrivateRoute */}
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <ChatLayout />
-            </PrivateRoute>
-          }
-        >
-          <Route index element={<ChatPage />} />
-          <Route path="chat/:conversationId" element={<ChatPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-        </Route>
-      </Routes>
-    </Router>
+    <div className='h-screen w-screen'>
+      <Router>
+        <Routes>
+          {/* Public */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          {/* Private - wrap layout in PrivateRoute */}
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <ChatLayout />
+              </PrivateRoute>
+            }
+          >
+            <Route index element={<ChatPage />} />
+            <Route path="chat/:conversationId" element={<ChatPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+          </Route>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
