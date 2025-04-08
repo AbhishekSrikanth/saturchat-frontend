@@ -22,13 +22,16 @@ export default function ChatLayout() {
 
   return (
     <div className="flex flex-col h-screen">
-      <TopBar />
-      <div className="flex flex-1">
+      <div className="fixed top-0 left-0 right-0 z-10">
+        <TopBar />
+      </div>
+
+      <div className="flex flex-1 pt-[56px] h-full overflow-hidden">
         <ChatSidebar
           conversations={conversations}
           refreshConversations={refreshConversations}
         />
-        <div className="flex-1 p-4 overflow-y-auto">
+        <div className="flex-1 h-full">
           <Outlet />
         </div>
       </div>
