@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
-import { getCurrentUser } from '../services/auth';
+import { getCurrentUser, verifyToken } from '../services/auth';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
@@ -29,21 +29,23 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
-  // Fetch current user if tokens exist and user is not yet loaded
   useEffect(() => {
-    async function fetchUser() {
+    async function initAuth() {
+      if (!tokens || user) return;
+
       try {
+        // Step 1: Verify access token
+        await verifyToken(tokens.access);
+
+        // Step 2: If token is valid, fetch user
         const currentUser = await getCurrentUser();
         setUser(currentUser);
-      } catch (err) {
-        console.error('Failed to fetch current user:', err);
-        logout(); // Invalid or expired token
+      } catch {
+        logout();
       }
     }
 
-    if (tokens && !user) {
-      fetchUser();
-    }
+    initAuth();
   }, [tokens, user]);
 
   const login = (userData, tokenData) => {
