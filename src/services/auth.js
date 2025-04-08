@@ -19,3 +19,17 @@ export async function getCurrentUser() {
   return res.data;
 }
 
+export async function verifyToken(accessToken) {
+  try {
+    await api.post('/auth/token/verify/', {
+      token: accessToken,
+    });
+    return true;
+  } catch (err) {
+    if (err.response?.status === 401) {
+      throw new Error('Token invalid or expired');
+    }
+    throw err;
+  }
+}
+
