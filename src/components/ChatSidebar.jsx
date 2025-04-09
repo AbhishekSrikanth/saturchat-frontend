@@ -22,7 +22,7 @@ export default function ChatSidebar({ conversations, refreshConversations }) {
     <>
       <div className="w-72 bg-white rounded-xl shadow-lg p-4 flex flex-col">
         {/* App Name */}
-        <h1 className="text-2xl font-bold mb-4">SaturChat</h1>
+        <h1 className="text-2xl font-bold mb-4 text-black">SaturChat</h1>
 
         {/* Search Bar */}
         <div className="mb-4">
