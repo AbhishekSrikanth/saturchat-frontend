@@ -21,20 +21,20 @@ export default function ChatLayout() {
   }, []);
 
   return (
-    <div className="flex gap-6 min-h-screen w-full bg-[#d3d3d3] p-10 box-border">
+    <div className="flex h-screen w-full bg-[#d3d3d3] p-10 gap-6 box-border overflow-hidden">
       {/* Sidebar */}
       <ChatSidebar
         conversations={conversations}
         refreshConversations={refreshConversations}
       />
 
-      {/* Chat Outlet */}
-      <div className="flex-1 h-full flex flex-col">
+      {/* Main chat area (ChatPage) */}
+      <div className="flex flex-col flex-1 overflow-hidden">
         <Outlet />
       </div>
 
-      {/* Profile button floating to the right */}
-      <div className="w-10">
+      {/* Profile */}
+      <div className="w-10 shrink-0">
         <ProfileMenu />
       </div>
     </div>
