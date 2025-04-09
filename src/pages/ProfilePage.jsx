@@ -4,8 +4,8 @@ export default function ProfilePage() {
   const { user } = useAuth();
 
   return (
-    <div className="max-w-md mx-auto mt-12 p-6 bg-white dark:bg-gray-800 shadow-lg rounded">
-      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Your Profile</h2>
+    <div className="max-w-md mx-auto mt-12 p-6 bg-white shadow-lg rounded">
+      <h2 className="text-2xl font-bold mb-4 text-gray-900">Your Profile</h2>
 
       <div className="space-y-4">
         <ProfileField label="Username" value={user?.username} />
@@ -29,10 +29,10 @@ export default function ProfilePage() {
 function ProfileField({ label, value }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      <label className="block text-sm font-medium text-gray-700 mb-1">
         {label}
       </label>
-      <div className="px-3 py-2 border rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white">
+      <div className="px-3 py-2 border rounded bg-gray-100 text-gray-800">
         {value}
       </div>
     </div>
