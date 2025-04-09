@@ -4,7 +4,11 @@ import { useAuth } from '../context/useAuth';
 import { getMessages } from '../services/chat';
 import { useChatSocket } from '../hooks/useChatSocket';
 import NoConversationSelected from '../components/NoConversationSelected';
+import SentBubble from '../components/SentBubble';
+import ReceivedBubble from '../components/ReceivedBubble';
 import dayjs from 'dayjs';
+
+
 
 export default function ChatPage() {
   const { conversationId } = useParams();
@@ -56,32 +60,25 @@ export default function ChatPage() {
   if (!conversationId) return <NoConversationSelected />;
 
   return (
-    <div className="flex flex-col h-full max-h-full relative">
+    <div className="flex flex-col h-full w-full max-h-full relative">
       {/* Message list */}
       <div className="flex-1 overflow-y-auto space-y-4 p-4">
         {loading ? (
-          <p className="text-sm text-gray-500 dark:text-gray-400">Loading messages...</p>
+          <p className="text-sm text-gray-500">Loading messages...</p>
         ) : messages.length === 0 ? (
-          <p className="text-sm text-gray-500 dark:text-gray-400">No messages yet.</p>
+          <p className="text-sm text-gray-500">No messages yet.</p>
         ) : (
-          messages.map((msg) => (
-            <div
-              key={msg.id || msg.message_id || Math.random()}
-              className={`max-w-sm px-4 py-2 rounded-lg shadow ${
-                msg.sender?.id === user.pk
-                  ? 'bg-blue-600 text-white self-end ml-auto'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white self-start'
-              }`}
-            >
-              <div className="text-xs mb-1 font-semibold">
-                {msg.sender?.username}{' '}
-                <span className="text-[10px] text-gray-300 dark:text-gray-400">
-                  {dayjs(msg.created_at || msg.timestamp).format('HH:mm')}
-                </span>
-              </div>
-              <div>{msg.encrypted_content || msg.message}</div>
-            </div>
-          ))
+          messages.map((msg) => {
+            const isMine = msg.sender?.id === user.pk;
+            const content = msg.encrypted_content || msg.message;
+            const time = dayjs(msg.created_at || msg.timestamp).format('h:mm A');
+
+            return isMine ? (
+              <SentBubble key={msg.id || msg.message_id} text={content} time={time} />
+            ) : (
+              <ReceivedBubble key={msg.id || msg.message_id} text={content} time={time} />
+            );
+          })
         )}
         <div ref={bottomRef} />
       </div>
@@ -89,22 +86,24 @@ export default function ChatPage() {
       {/* Input bar pinned to bottom */}
       <form
         onSubmit={handleSend}
-        className="p-4 border-t dark:border-gray-700 flex gap-2 bg-white dark:bg-gray-900"
+        className="mt-4 p-4 bg-white rounded-xl shadow-lg flex items-center gap-3 sticky bottom-0"
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
-          className="flex-1 px-3 py-2 rounded border dark:bg-gray-800 dark:text-white"
+          className="flex-1 px-4 py-3 rounded-full bg-gray-100 border border-gray-300 text-sm outline-none"
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-black text-white hover:bg-gray-800"
         >
-          Send
+          &gt;
         </button>
       </form>
+
+
     </div>
   );
 }
