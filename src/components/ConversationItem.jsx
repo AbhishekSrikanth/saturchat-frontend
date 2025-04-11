@@ -27,7 +27,11 @@ export default function ConversationItem({ conversation }) {
         }`}
       >
         {/* Avatar Placeholder */}
-        <div className="w-9 h-9 bg-gray-300 rounded-full flex-shrink-0" />
+        <div
+        className="w-9 h-9 rounded-full bg-black text-white font-semibold flex items-center justify-center hover:bg-gray-800 shadow-lg"
+      >
+        {displayName[0]?.toUpperCase() ?? 'U'}
+      </div>
 
         {/* Chat Info */}
         <div className="flex flex-col overflow-hidden">
