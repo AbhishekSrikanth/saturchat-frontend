@@ -62,7 +62,7 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       <div className="flex flex-col flex-1 overflow-hidden">
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 mb-3">
           {loading ? (
             <p className="text-sm text-gray-500">Loading messages...</p>
           ) : messages.length === 0 ? (
@@ -72,7 +72,7 @@ export default function ChatPage() {
               const isMine = msg.sender?.id === user.pk;
               const content = msg.encrypted_content || msg.message;
               const time = dayjs(msg.created_at || msg.timestamp).format('h:mm A');
-  
+
               return isMine ? (
                 <SentBubble key={msg.id || msg.message_id} text={content} time={time} />
               ) : (
@@ -82,18 +82,18 @@ export default function ChatPage() {
           )}
           <div ref={bottomRef} />
         </div>
-  
-      {/* Input bar pinned to bottom */}
+
+        {/* Input bar pinned to bottom */}
         <form
           onSubmit={handleSend}
-          className="p-4 bg-white border-t flex items-center gap-3 rounded-xl"
+          className="p-4 bg-white flex items-center gap-3 rounded-xl"
         >
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 px-4 py-3 rounded-full bg-gray-100 border border-gray-300 text-sm outline-none"
+            className="flex-1 px-4 py-3 rounded-full bg-gray-100 text-sm outline-none"
           />
           <button
             type="submit"
