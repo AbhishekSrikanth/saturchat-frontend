@@ -28,7 +28,7 @@ export default function ProfileMenu() {
       {/* Avatar Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-10 h-10 rounded-full bg-gray-300 text-gray-800 font-semibold flex items-center justify-center hover:bg-gray-400"
+        className="w-10 h-10 rounded-full bg-black text-white font-semibold flex items-center justify-center hover:bg-gray-800 shadow-lg"
       >
         {user?.username?.[0]?.toUpperCase() ?? 'U'}
       </button>
