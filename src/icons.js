@@ -3,10 +3,11 @@ import {
   faPlus,
   faRightFromBracket,
   faUser,
+  faCirclePlus
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGoogle,
   faGithub,
 } from '@fortawesome/free-brands-svg-icons';
 
-library.add(faPlus, faRightFromBracket, faUser, faGoogle, faGithub);
+library.add(faPlus, faRightFromBracket, faUser, faGoogle, faGithub, faCirclePlus);
