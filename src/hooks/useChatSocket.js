@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useAuth } from '../context/useAuth';
 
-const MAX_RETRIES = 5
+const MAX_RETRIES = 5;
 
 export function useChatSocket(conversationId, onMessageReceived) {
   const { tokens } = useAuth();
@@ -10,23 +10,7 @@ export function useChatSocket(conversationId, onMessageReceived) {
   useEffect(() => {
     if (!conversationId || !tokens?.access) return;
 
-    function connectWebSocket(url, retries = 0) {
-      const socket = new WebSocket(url);
-    
-      socket.onclose = (e) => {
-        if (retries < MAX_RETRIES) {
-          console.warn(`WebSocket closed. Retrying (${retries + 1})...`);
-          setTimeout(() => connectWebSocket(url, retries + 1), 1000);
-        } else {
-          console.error('WebSocket failed after max retries: ', e);
-        }
-      };
-    
-      return socket;
-    }
-
-    const socket = connectWebSocket(`ws://localhost:8000/ws/chat/${conversationId}/?token=${tokens.access}`);
-
+    const socket = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/?token=${tokens.access}`);
     socketRef.current = socket;
 
     socket.onopen = () => {
@@ -40,13 +24,8 @@ export function useChatSocket(conversationId, onMessageReceived) {
       }
     };
 
-    socket.onerror = (e) => {
-      console.error('WebSocket error:', e);
-    };
-
-    socket.onclose = () => {
-      console.log(`Disconnected from conversation ${conversationId}`);
-    };
+    socket.onerror = (e) => console.error('Chat WebSocket error:', e);
+    socket.onclose = () => console.log(`Disconnected from conversation ${conversationId}`);
 
     return () => {
       socket.close();
@@ -54,11 +33,10 @@ export function useChatSocket(conversationId, onMessageReceived) {
   }, [conversationId, tokens?.access, onMessageReceived]);
 
   const sendMessage = (text) => {
-    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+    if (socketRef.current?.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify({ type: 'message', message: text }));
     }
   };
 
   return { sendMessage };
 }
-
