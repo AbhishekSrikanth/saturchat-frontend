@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createConversation, searchUsers } from '../services/chat';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function NewChatModal({ isOpen, onClose, onCreated }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -17,7 +18,6 @@ export default function NewChatModal({ isOpen, onClose, onCreated }) {
         setResults([]);
       }
     }, 300);
-
     return () => clearTimeout(delaySearch);
   }, [query]);
 
@@ -36,15 +36,13 @@ export default function NewChatModal({ isOpen, onClose, onCreated }) {
   const handleCreate = async () => {
     const participantIds = selected.map((u) => u.id);
     const isGroup = participantIds.length > 1;
-
     try {
       const conversation = await createConversation({
         participants: participantIds,
         is_group: isGroup,
         name: isGroup ? groupName : undefined,
       });
-
-      if (onCreated) onCreated();
+      onCreated?.();
       onClose();
       navigate(`/chat/${conversation.id}`);
     } catch (err) {
@@ -55,28 +53,25 @@ export default function NewChatModal({ isOpen, onClose, onCreated }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
-      <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">
-          Start New Chat
-        </h2>
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md space-y-4">
+        <h2 className="text-xl font-bold text-black">Start a New Chat</h2>
 
-        <div className="mb-4">
-          <label className="block text-sm mb-1 text-gray-700 dark:text-gray-300">Add participant</label>
+        <div>
           <input
             type="text"
-            placeholder="Search users"
+            placeholder="Search users..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full px-3 py-2 rounded border dark:bg-gray-800 dark:text-white"
+            className="w-full px-4 py-2 bg-gray-100 rounded-full text-sm outline-none"
           />
           {results.length > 0 && (
-            <div className="bg-white dark:bg-gray-800 border rounded mt-1 max-h-40 overflow-y-auto">
+            <div className="bg-white border rounded-lg mt-2 max-h-48 overflow-y-auto shadow-sm">
               {results.map((user) => (
                 <div
                   key={user.id}
-                  className="px-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                   onClick={() => handleAdd(user)}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-sm"
                 >
                   {user.username}
                 </div>
@@ -85,40 +80,44 @@ export default function NewChatModal({ isOpen, onClose, onCreated }) {
           )}
         </div>
 
-        <div className="mb-4 flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {selected.map((user) => (
             <span
               key={user.id}
-              className="bg-blue-600 text-white text-sm px-2 py-1 rounded-full flex items-center gap-1"
+              className="bg-black text-white text-sm px-3 py-1 rounded-full flex items-center gap-2"
             >
               {user.username}
-              <button onClick={() => handleRemove(user.id)} className="text-white font-bold">×</button>
+              <button
+                onClick={() => handleRemove(user.id)}
+                className="text-white font-bold"
+              >
+                ×
+              </button>
             </span>
           ))}
         </div>
 
         {selected.length > 1 && (
-          <div className="mb-4">
-            <label className="block text-sm mb-1 text-gray-700 dark:text-gray-300">Group name</label>
-            <input
-              type="text"
-              value={groupName}
-              onChange={(e) => setGroupName(e.target.value)}
-              placeholder="Enter a group name"
-              className="w-full px-3 py-2 rounded border dark:bg-gray-800 dark:text-white"
-              required
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="Group name"
+            value={groupName}
+            onChange={(e) => setGroupName(e.target.value)}
+            className="w-full px-4 py-2 bg-gray-100 rounded-full text-sm outline-none"
+          />
         )}
 
         <div className="flex justify-end gap-3">
-          <button onClick={onClose} className="text-sm px-4 py-2 rounded bg-gray-400 text-white">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 text-sm bg-gray-300 text-black rounded-full hover:bg-gray-400"
+          >
             Cancel
           </button>
           <button
             onClick={handleCreate}
-            className="text-sm px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
             disabled={selected.length === 0 || (selected.length > 1 && !groupName)}
+            className="px-4 py-2 text-sm bg-black text-white rounded-full hover:bg-gray-800 disabled:opacity-50"
           >
             Create
           </button>
