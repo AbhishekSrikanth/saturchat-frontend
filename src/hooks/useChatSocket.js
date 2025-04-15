@@ -1,33 +1,60 @@
 import { useEffect, useRef } from 'react';
 import { useAuth } from '../context/useAuth';
 
-const MAX_RETRIES = 5;
-
 export function useChatSocket(conversationId, onMessageReceived) {
   const { tokens } = useAuth();
   const socketRef = useRef(null);
 
   useEffect(() => {
-    if (!conversationId || !tokens?.access) return;
+    if (!tokens?.access || !conversationId) return;
 
-    const socket = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/?token=${tokens.access}`);
+    const socketUrl = `ws://localhost:8000/ws/chat/${conversationId}/?token=${tokens.access}`;
+    const socket = new WebSocket(socketUrl);
     socketRef.current = socket;
 
-    socket.onopen = () => {
-      console.log(`Connected to conversation ${conversationId}`);
+    let isUnmounted = false;
+
+    const handleOpen = () => {
+      if (isUnmounted) {
+        socket.close();
+        return;
+      }
+      console.log(`[ChatSocket] Connected to conversation ${conversationId}`);
     };
 
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === 'message' && onMessageReceived) {
-        onMessageReceived(data);
+    const handleMessage = (event) => {
+      console.log('[ChatSocket] Raw message:', event.data);
+
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'message' && onMessageReceived) {
+          onMessageReceived(data);
+        }
+      } catch (err) {
+        console.error('[ChatSocket] Error parsing message:', err);
       }
     };
 
-    socket.onerror = (e) => console.error('Chat WebSocket error:', e);
-    socket.onclose = () => console.log(`Disconnected from conversation ${conversationId}`);
+    const handleError = (e) => {
+      console.error('[ChatSocket] Error:', e);
+    };
+
+    const handleClose = (e) => {
+      console.log(`[ChatSocket] Disconnected from conversation ${conversationId}:`, e.code, e.reason);
+    };
+
+    socket.addEventListener('open', handleOpen);
+    socket.addEventListener('message', handleMessage);
+    socket.addEventListener('error', handleError);
+    socket.addEventListener('close', handleClose);
 
     return () => {
+      isUnmounted = true;
+      console.log(`[ChatSocket] Cleaning up socket for conversation ${conversationId}`);
+      socket.removeEventListener('open', handleOpen);
+      socket.removeEventListener('message', handleMessage);
+      socket.removeEventListener('error', handleError);
+      socket.removeEventListener('close', handleClose);
       socket.close();
     };
   }, [conversationId, tokens?.access, onMessageReceived]);
