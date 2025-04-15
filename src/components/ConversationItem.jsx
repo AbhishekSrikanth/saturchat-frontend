@@ -14,7 +14,11 @@ export default function ConversationItem({ conversation }) {
     displayName = other?.user?.username ?? 'Unknown User';
   }
 
-  const lastMessage = conversation.last_message?.encrypted_content ?? '';
+  let lastMessage = conversation.last_message?.encrypted_content ?? '';
+  if (lastMessage.length > 15) {
+    lastMessage = lastMessage.slice(0, 25) + '...';
+  }
+
   const isActive = location.pathname === `/chat/${conversation.id}`;
 
   return (
