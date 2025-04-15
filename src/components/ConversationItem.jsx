@@ -15,7 +15,7 @@ export default function ConversationItem({ conversation }) {
   }
 
   let lastMessage = conversation.last_message?.encrypted_content ?? '';
-  if (lastMessage.length > 15) {
+  if (lastMessage.length > 25) {
     lastMessage = lastMessage.slice(0, 25) + '...';
   }
 
