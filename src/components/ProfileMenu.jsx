@@ -41,13 +41,13 @@ export default function ProfileMenu() {
               navigate('/profile');
               setOpen(false);
             }}
-            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:rounded-t-lg"
           >
             Profile
           </button>
           <button
             onClick={handleLogout}
-            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-200 hover:rounded-b-lg"
           >
             Log out
           </button>
