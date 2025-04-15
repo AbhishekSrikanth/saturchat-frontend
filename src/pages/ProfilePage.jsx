@@ -48,21 +48,21 @@ export default function ProfilePage() {
   if (loading) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
 
   return (
-    <div className="max-w-md mx-auto mt-12 p-6 bg-white shadow-lg rounded">
+    <div className="max-w-md mx-auto p-6 max-h-full overflow-auto bg-white shadow-lg rounded">
       <h2 className="text-2xl font-bold mb-4 text-gray-900">Edit Profile</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <ProfileInput label="First Name" name="first_name" value={form.first_name} onChange={handleChange} />
-        <ProfileInput label="Last Name" name="last_name" value={form.last_name} onChange={handleChange} />
-        <ProfileInput label="Email" name="email" value={form.email} onChange={handleChange} />
-        <ProfileInput label="Bio" name="bio" value={form.bio} onChange={handleChange} />
-        <ProfileInput label="OpenAI API Key" name="openai_api_key" value={form.openai_api_key || ''} onChange={handleChange} />
-        <ProfileInput label="Anthropic API Key" name="anthropic_api_key" value={form.anthropic_api_key || ''} onChange={handleChange} />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <ProfileInput label="First Name" name="first_name" value={form.first_name} onChange={handleChange} />
+          <ProfileInput label="Last Name" name="last_name" value={form.last_name} onChange={handleChange} />
+          <ProfileInput label="Email" name="email" value={form.email} onChange={handleChange} />
+          <ProfileInput label="Bio" name="bio" value={form.bio} onChange={handleChange} />
+          <ProfileInput label="OpenAI API Key" name="openai_api_key" value={form.openai_api_key || ''} onChange={handleChange} />
+          <ProfileInput label="Anthropic API Key" name="anthropic_api_key" value={form.anthropic_api_key || ''} onChange={handleChange} />
 
-        <button type="submit" className="w-full bg-black text-white py-2 rounded hover:bg-gray-800">
-          Save Changes
-        </button>
-        {saved && <p className="text-green-600 text-sm mt-2">Changes saved successfully.</p>}
-      </form>
+          <button type="submit" className="w-full bg-black text-white py-2 rounded hover:bg-gray-800">
+            Save Changes
+          </button>
+          {saved && <p className="text-green-600 text-sm mt-2">Changes saved successfully.</p>}
+        </form>
     </div>
   );
 }
