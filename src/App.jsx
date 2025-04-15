@@ -5,6 +5,7 @@ import ChatLayout from './layouts/ChatLayout';
 import ChatPage from './pages/ChatPage';
 import ProfilePage from './pages/ProfilePage';
 import PrivateRoute from './components/PrivateRoute';
+import NoConversationSelected from './components/NoConversationSelected';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
               </PrivateRoute>
             }
           >
-            <Route index element={<ChatPage />} />
+            <Route index element={<NoConversationSelected />} />
             <Route path="chat/:conversationId" element={<ChatPage />} />
             <Route path="profile" element={<ProfilePage />} />
           </Route>
