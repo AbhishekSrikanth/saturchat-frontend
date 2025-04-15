@@ -1,24 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Outlet } from 'react-router-dom';
 import ChatSidebar from '../components/ChatSidebar';
 import { getConversations } from '../services/chat';
-import ProfileMenu from '../components/ProfileMenu'; // you'll create this later
+import ProfileMenu from '../components/ProfileMenu';
+import { useUserSocket } from '../hooks/useUserSocket';
 
 export default function ChatLayout() {
   const [conversations, setConversations] = useState([]);
 
-  const refreshConversations = async () => {
+  const refreshConversations = useCallback(async () => {
     try {
       const data = await getConversations();
       setConversations(data);
     } catch (err) {
       console.error('Failed to refresh conversations:', err);
     }
-  };
+  }, []);
+
+  const handleConversationUpdated = useCallback(() => {
+    refreshConversations();
+  }, [refreshConversations]);
+
+  useUserSocket(handleConversationUpdated);
 
   useEffect(() => {
     refreshConversations();
-  }, []);
+  }, [refreshConversations]);
 
   return (
     <div className="flex h-screen w-full bg-[#d3d3d3] p-10 gap-6 box-border overflow-hidden">
