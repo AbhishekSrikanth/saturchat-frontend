@@ -39,45 +39,57 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex items-center justify-center h-screen bg-gray-300 px-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-80"
+        className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-4"
       >
-        <h2 className="text-xl font-bold mb-4 text-center text-gray-900 dark:text-white">
-          Register
-        </h2>
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+        <h1 className="text-4xl  my-6 font-black text-center text-black">SaturChat</h1>
+        <h2 className="text-xl my-4 font-bold text-center text-black">Create an Account</h2>
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="mb-3 px-3 py-2 w-full rounded border dark:bg-gray-700 dark:text-white"
+          className="w-full px-4 py-2 bg-gray-100 rounded-full text-sm outline-none"
         />
+
         <input
           type="password"
           placeholder="Password"
           value={password1}
           onChange={(e) => setPassword1(e.target.value)}
           required
-          className="mb-3 px-3 py-2 w-full rounded border dark:bg-gray-700 dark:text-white"
+          className="w-full px-4 py-2 bg-gray-100 rounded-full text-sm outline-none"
         />
+
         <input
           type="password"
           placeholder="Confirm Password"
           value={password2}
           onChange={(e) => setPassword2(e.target.value)}
           required
-          className="mb-4 px-3 py-2 w-full rounded border dark:bg-gray-700 dark:text-white"
+          className="w-full px-4 py-2 bg-gray-100 rounded-full text-sm outline-none"
         />
+
         <button
           type="submit"
-          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded"
+          className="w-full mt-4 bg-black hover:bg-gray-800 text-white font-medium py-2 rounded-full transition"
         >
           Register
         </button>
+        <p className="text-sm text-center text-gray-700 mt-2">
+          Already have an account?{' '}
+          <span
+            onClick={() => navigate('/login')}
+            className="font-semibold text-black cursor-pointer hover:underline"
+          >
+            Login here
+          </span>
+        </p>
       </form>
     </div>
   );
