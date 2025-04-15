@@ -70,14 +70,15 @@ export default function ChatPage() {
           ) : (
             messages.map((msg) => {
               const isMine = msg.sender?.id === user.pk;
+              const username = msg.sender?.username || 'Unknown';
               const content = msg.encrypted_content || msg.message;
               const time = dayjs(msg.created_at || msg.timestamp).format('h:mm A');
 
               return isMine ? (
-                <SentBubble key={msg.id || msg.message_id} text={content} time={time} />
+                <SentBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
               ) : (
                 <ReceivedBubble key={msg.id || msg.message_id} text={content} time={time} />
-              );
+              );              
             })
           )}
           <div ref={bottomRef} />
