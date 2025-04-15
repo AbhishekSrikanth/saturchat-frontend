@@ -56,6 +56,15 @@ export default function LoginPage() {
         >
           Login
         </button>
+        <p className="text-sm text-center text-gray-700 mt-2">
+          Don't have an account?{' '}
+          <span
+            onClick={() => navigate('/register')}
+            className="font-semibold text-black cursor-pointer hover:underline"
+          >
+            Register here
+          </span>
+        </p>
       </form>
     </div>
   );
