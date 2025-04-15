@@ -75,9 +75,9 @@ export default function ChatPage() {
               const time = dayjs(msg.created_at || msg.timestamp).format('h:mm A');
 
               return isMine ? (
-                <SentBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
+                <SentBubble key={msg.id || msg.message_id} text={content} time={time} />
               ) : (
-                <ReceivedBubble key={msg.id || msg.message_id} text={content} time={time} />
+                <ReceivedBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
               );              
             })
           )}
