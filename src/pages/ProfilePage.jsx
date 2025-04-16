@@ -22,6 +22,8 @@ export default function ProfilePage() {
 
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [touchedKeys, setTouchedKeys] = useState({});
+
 
   useEffect(() => {
     async function fetchProfile() {
@@ -42,9 +44,18 @@ export default function ProfilePage() {
   }, []);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+  
+    setForm({ ...form, [name]: value });
+  
+    // Mark the key as touched if it's one of the API keys
+    if (['openai_api_key', 'anthropic_api_key', 'gemini_api_key'].includes(name)) {
+      setTouchedKeys((prev) => ({ ...prev, [name]: true }));
+    }
+  
     setSaved(false);
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,6 +64,13 @@ export default function ProfilePage() {
     // Include all fields
     for (const key of ['first_name', 'last_name', 'bio', 'openai_api_key', 'anthropic_api_key', 'gemini_api_key']) {
       data.append(key, form[key] || '');
+    }
+
+    // Only include keys that were touched
+    for (const key of ['openai_api_key', 'anthropic_api_key', 'gemini_api_key']) {
+      if (touchedKeys[key]) {
+        data.append(key, form[key] || '');
+      }
     }
 
     if (form.avatarFile) {
