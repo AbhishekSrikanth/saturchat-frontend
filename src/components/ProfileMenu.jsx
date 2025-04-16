@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/useAuth';
 import { useNavigate } from 'react-router-dom';
+import Avatar from './Avatar';
 
 export default function ProfileMenu() {
   const { user, logout } = useAuth();
@@ -30,7 +31,7 @@ export default function ProfileMenu() {
         onClick={() => setOpen(!open)}
         className="w-10 h-10 rounded-full bg-black text-white font-semibold flex items-center justify-center hover:bg-gray-800 shadow-lg"
       >
-        {user?.username?.[0]?.toUpperCase() ?? 'U'}
+        <Avatar user={user} size="w-10 h-10" textSize="text-base" />
       </button>
 
       {/* Dropdown Menu */}

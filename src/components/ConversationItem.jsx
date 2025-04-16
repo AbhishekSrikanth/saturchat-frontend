@@ -1,17 +1,24 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
+import Avatar from './Avatar';
 
 export default function ConversationItem({ conversation }) {
   const { user } = useAuth();
   const location = useLocation();
 
-  // Determine display name
   let displayName = 'Unnamed Chat';
+  let avatarUser = null; // <-- to pass to <Avatar />
+
   if (conversation.is_group) {
     displayName = conversation.name || 'Unnamed Group';
+    avatarUser = {
+      username: conversation.name,
+      avatar: conversation.avatar, // <- assume conversation.avatar exists
+    };
   } else {
     const other = conversation.participants.find(p => p.user.id !== user.pk);
     displayName = other?.user?.username ?? 'Unknown User';
+    avatarUser = other?.user;
   }
 
   let lastMessage = conversation.last_message?.encrypted_content ?? '';
@@ -30,12 +37,8 @@ export default function ConversationItem({ conversation }) {
             : 'hover:bg-gray-100 text-gray-800'
         }`}
       >
-        {/* Avatar Placeholder */}
-        <div
-        className="w-9 h-9 rounded-full bg-black text-white font-semibold flex items-center justify-center hover:bg-gray-800 shadow-lg"
-      >
-        {displayName[0]?.toUpperCase() ?? 'U'}
-      </div>
+        {/* Avatar */}
+        <Avatar user={avatarUser} />
 
         {/* Chat Info */}
         <div className="flex flex-col overflow-hidden">
