@@ -1,31 +1,44 @@
+// src/pages/ProfilePage.jsx
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/useAuth';
 import api from '../services/axios';
+import ProfileInfoCard from '../components/ProfileInfoCard';
+import ApiKeysCard from '../components/ApiKeysCard';
 
 export default function ProfilePage() {
-  const { login } = useAuth(); // login helps update localStorage
+  const { login } = useAuth();
   const [form, setForm] = useState({
+    username: '',
     first_name: '',
     last_name: '',
     email: '',
     bio: '',
     openai_api_key: '',
     anthropic_api_key: '',
+    gemini_api_key: '',
+    avatar: null,
+    avatarFile: null,
   });
+
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchProfile() {
       try {
         const res = await api.get('/api/users/me/');
-        setForm(res.data);
+        setForm({
+          ...res.data,
+          avatar: res.data.avatar || null,
+          avatarFile: null,
+        });
         setLoading(false);
       } catch (err) {
         console.error('Failed to load profile', err);
       }
     }
-    fetchData();
+
+    fetchProfile();
   }, []);
 
   const handleChange = (e) => {
@@ -35,51 +48,73 @@ export default function ProfilePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = new FormData();
+
+    // Include all fields
+    for (const key of ['first_name', 'last_name', 'bio', 'openai_api_key', 'anthropic_api_key', 'gemini_api_key']) {
+      data.append(key, form[key] || '');
+    }
+
+    if (form.avatarFile) {
+      data.append('avatar', form.avatarFile);
+    } else if (form.avatar === null) {
+      data.append('avatar', ''); // clear avatar
+    }
+
     try {
-      const res = await api.patch('/api/users/me/', form);
-      setForm(res.data);
+      const res = await api.patch('/api/users/me/', data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      setForm({
+        ...res.data,
+        avatarFile: null,
+      });
+
       setSaved(true);
-      login({ ...res.data, pk: res.data.pk ?? res.data.id }, JSON.parse(localStorage.getItem('tokens'))); // refresh user in context
+      login({ ...res.data, pk: res.data.pk ?? res.data.id }, JSON.parse(localStorage.getItem('tokens')));
     } catch (err) {
       console.error('Failed to update profile', err);
     }
   };
 
-  if (loading) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
+  if (loading) {
+    return <p className="text-center mt-10 text-gray-500">Loading...</p>;
+  }
 
   return (
-    <div className="max-w-md mx-auto p-6 max-h-full overflow-auto bg-white shadow-lg rounded">
-      <h2 className="text-2xl font-bold mb-4 text-gray-900">Edit Profile</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <ProfileInput label="First Name" name="first_name" value={form.first_name} onChange={handleChange} />
-          <ProfileInput label="Last Name" name="last_name" value={form.last_name} onChange={handleChange} />
-          <ProfileInput label="Email" name="email" value={form.email} onChange={handleChange} />
-          <ProfileInput label="Bio" name="bio" value={form.bio} onChange={handleChange} />
-          <ProfileInput label="OpenAI API Key" name="openai_api_key" value={form.openai_api_key || ''} onChange={handleChange} />
-          <ProfileInput label="Anthropic API Key" name="anthropic_api_key" value={form.anthropic_api_key || ''} onChange={handleChange} />
+    <div className="flex justify-center gap-6 p-6 max-h-full overflow-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="flex gap-6 w-full max-w-6xl"
+        encType="multipart/form-data"
+      >
+        {/* Left: Avatar + Basic Info */}
+        <ProfileInfoCard
+          form={form}
+          setForm={setForm}
+          handleChange={handleChange}
+        />
 
-          <button type="submit" className="w-full bg-black text-white py-2 rounded hover:bg-gray-800">
+        {/* Right: API Keys */}
+        <ApiKeysCard
+          form={form}
+          handleChange={handleChange}
+        />
+
+        {/* Save Button */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+          <button
+            type="submit"
+            className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800"
+          >
             Save Changes
           </button>
-          {saved && <p className="text-green-600 text-sm mt-2">Changes saved successfully.</p>}
-        </form>
-    </div>
-  );
-}
-
-function ProfileInput({ label, name, value, onChange }) {
-  return (
-    <div>
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
-      </label>
-      <input
-        name={name}
-        value={value || ''}
-        onChange={onChange}
-        className="w-full px-3 py-2 border rounded bg-gray-100"
-        type="text"
-      />
+          {saved && (
+            <p className="text-green-600 text-sm text-center mt-2">Changes saved successfully.</p>
+          )}
+        </div>
+      </form>
     </div>
   );
 }
