@@ -21,7 +21,7 @@ export async function getCurrentUser() {
 
 export async function verifyToken(accessToken) {
   try {
-    await api.post('/auth/token/verify/', {
+    await api.post('/api/auth/token/verify/', {
       token: accessToken,
     });
     return true;
@@ -33,3 +33,7 @@ export async function verifyToken(accessToken) {
   }
 }
 
+export async function refreshToken(refresh) {
+  const res = await api.post('/api/auth/token/refresh/', { refresh });
+  return res.data;
+}

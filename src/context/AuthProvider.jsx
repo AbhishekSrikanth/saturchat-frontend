@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
-import { getCurrentUser, verifyToken } from '../services/auth';
+import { getCurrentUser, verifyToken, refreshToken } from '../services/auth';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : null;
   });
 
+  // Persist tokens to localStorage
   useEffect(() => {
     if (tokens) {
       localStorage.setItem('tokens', JSON.stringify(tokens));
@@ -21,6 +22,7 @@ export function AuthProvider({ children }) {
     }
   }, [tokens]);
 
+  // Persist user to localStorage
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
@@ -29,24 +31,63 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
+  // On mount or when tokens change: verify or refresh, then fetch user
   useEffect(() => {
     async function initAuth() {
-      if (!tokens || user) return;
+      if (!tokens) return;
 
       try {
-        // Step 1: Verify access token
+        // Attempt to verify current access token
         await verifyToken(tokens.access);
+      } catch {
+        // If verification fails, try to refresh
+        try {
+          const newTokens = await refreshToken(tokens.refresh);
+          setTokens(newTokens);
+        } catch {
+          // Refresh failed: log out
+          return logout();
+        }
+      }
 
-        // Step 2: If token is valid, fetch user
+      // Fetch and set current user
+      try {
         const currentUser = await getCurrentUser();
         setUser(currentUser);
-      } catch {
-        logout();
+      } catch (err) {
+        console.error('Failed to fetch user', err);
       }
     }
 
     initAuth();
-  }, [tokens, user]);
+  }, [tokens]);
+
+  // Proactively refresh access token one minute before expiry
+  useEffect(() => {
+    if (!tokens?.access) return;
+
+    let exp;
+    try {
+      const payload = JSON.parse(atob(tokens.access.split('.')[1]));
+      exp = payload.exp * 1000;
+    } catch {
+      return;
+    }
+
+    const msUntilRefresh = exp - Date.now() - 60_000;
+    if (msUntilRefresh <= 0) return;
+
+    const timer = setTimeout(async () => {
+      try {
+        const newTokens = await refreshToken(tokens.refresh);
+        setTokens(newTokens);
+      } catch {
+        logout();
+      }
+    }, msUntilRefresh);
+
+    return () => clearTimeout(timer);
+  }, [tokens]);
 
   const login = (userData, tokenData) => {
     setUser(userData);
