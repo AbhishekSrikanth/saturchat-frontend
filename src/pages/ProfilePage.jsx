@@ -62,7 +62,7 @@ export default function ProfilePage() {
     const data = new FormData();
 
     // Include all fields
-    for (const key of ['first_name', 'last_name', 'bio', 'openai_api_key', 'anthropic_api_key', 'gemini_api_key']) {
+    for (const key of ['first_name', 'last_name', 'bio']) {
       data.append(key, form[key] || '');
     }
 
