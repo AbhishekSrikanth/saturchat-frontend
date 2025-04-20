@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { searchUsers } from '../../services/chat';
-import UserChip from './UserChip';
+import UserChip from '../UserChip';
 
 export default function UserSearchBar({ onAdd, onSelect, selected, onRemoveSelected }) {
   const [query, setQuery] = useState('');

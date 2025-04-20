@@ -10,7 +10,7 @@ import {
 } from '../../services/chat';
 
 import AvatarEditor from './AvatarEditor';
-import UserChip from './UserChip';
+import UserChip from '../UserChip';
 import UserSearchBar from './UserSearchBar';
 import SectionHeader from './SectionHeader';
 import ActionButton from './ActionButton';
