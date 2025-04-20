@@ -29,8 +29,8 @@ export default function ConversationItem({ conversation, refreshConversations })
   }
 
   let lastMessage = conversation.last_message?.encrypted_content ?? '';
-  if (lastMessage.length > 25) {
-    lastMessage = lastMessage.slice(0, 25) + '...';
+  if (lastMessage.length > 15) {
+    lastMessage = lastMessage.slice(0, 15) + '...';
   }
 
   const isActive = location.pathname === `/chat/${conversation.id}`;
@@ -65,7 +65,7 @@ export default function ConversationItem({ conversation, refreshConversations })
               e.stopPropagation();
               setModalOpen(true);
             }}
-            className="text-gray-400 hover:text-black ml-2"
+            className={`${isActive ? 'text-white hover:text-gray-500' : 'text-gray-400 hover:text-black'} ml-2 p-1 rounded cursor-pointer`}
           >
             <FontAwesomeIcon icon={faEllipsisVertical} />
           </button>
