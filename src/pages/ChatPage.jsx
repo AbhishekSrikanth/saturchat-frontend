@@ -69,7 +69,7 @@ export default function ChatPage() {
             <p className="text-sm text-gray-500">No messages yet.</p>
           ) : (
             messages.map((msg) => {
-              const isMine = msg.sender?.id === user.pk;
+              const isMine = msg.sender?.id === user.id;
               const username = msg.sender?.username || 'Unknown';
               const content = msg.encrypted_content || msg.message;
               const time = dayjs(msg.created_at || msg.timestamp).format('h:mm A');

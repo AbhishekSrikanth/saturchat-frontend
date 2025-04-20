@@ -6,9 +6,9 @@ export function useUserSocket(onConversationUpdated) {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    if (!tokens?.access || !user?.pk) return;
+    if (!tokens?.access || !user?.id) return;
 
-    const socketUrl = `ws://localhost:8000/ws/user/${user.pk}/?token=${tokens.access}`;
+    const socketUrl = `ws://localhost:8000/ws/user/${user.id}/?token=${tokens.access}`;
     const socket = new WebSocket(socketUrl);
     socketRef.current = socket;
 
@@ -51,5 +51,5 @@ export function useUserSocket(onConversationUpdated) {
       socket.removeEventListener('close', handleClose);
       socket.close();
     };
-  }, [tokens?.access, user?.pk, onConversationUpdated]);
+  }, [tokens?.access, user?.id, onConversationUpdated]);
 }

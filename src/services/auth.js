@@ -15,7 +15,7 @@ export async function registerUser({ username, password1, password2 }) {
 }
 
 export async function getCurrentUser() {
-  const res = await api.get('/api/auth/user/');
+  const res = await api.get('/api/users/me/');
   return res.data;
 }
 

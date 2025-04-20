@@ -16,7 +16,7 @@ export default function ConversationItem({ conversation }) {
       avatar: conversation.avatar, // <- assume conversation.avatar exists
     };
   } else {
-    const other = conversation.participants.find(p => p.user.id !== user.pk);
+    const other = conversation.participants.find(p => p.user.id !== user.id);
     displayName = other?.user?.username ?? 'Unknown User';
     avatarUser = other?.user;
   }
@@ -45,7 +45,7 @@ export default function ConversationItem({ conversation }) {
           <span className="font-semibold text-sm truncate">{displayName}</span>
           {lastMessage && (
             <span className={`text-xs truncate ${isActive ? 'text-gray-300' : 'text-gray-500'}`}>
-              {conversation.last_message?.sender?.id === user.pk ? 'You: ' : ''}
+              {conversation.last_message?.sender?.id === user.id ? 'You: ' : ''}
               {lastMessage}
             </span>
           )}

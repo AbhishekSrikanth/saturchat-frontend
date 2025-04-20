@@ -13,7 +13,7 @@ export default function ChatSidebar({ conversations, refreshConversations }) {
     if (chat.is_group) {
       return chat.name?.toLowerCase().includes(searchTerm.toLowerCase());
     } else {
-      const other = chat.participants.find((p) => p.user.id !== user.pk);
+      const other = chat.participants.find((p) => p.user.id !== user.id);
       return other?.user?.username?.toLowerCase().includes(searchTerm.toLowerCase());
     }
   });
