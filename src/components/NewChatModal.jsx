@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createConversation, searchUsers } from '../services/chat';
 import { useNavigate } from 'react-router-dom';
+import UserChip from './UserChip';
 
 
 export default function NewChatModal({ isOpen, onClose, onCreated }) {
@@ -90,18 +91,7 @@ export default function NewChatModal({ isOpen, onClose, onCreated }) {
 
         <div className="flex flex-wrap gap-2">
           {selected.map((user) => (
-            <span
-              key={user.id}
-              className="bg-black text-white text-sm px-3 py-1 rounded-full flex items-center gap-2"
-            >
-              {user.username}
-              <button
-                onClick={() => handleRemove(user.id)}
-                className="text-white font-bold"
-              >
-                ×
-              </button>
-            </span>
+            UserChip({ user, onRemove: handleRemove, isRemovable: true })
           ))}
         </div>
 
