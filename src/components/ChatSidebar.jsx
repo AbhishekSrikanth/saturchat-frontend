@@ -55,6 +55,7 @@ export default function ChatSidebar({ conversations, refreshConversations }) {
               <ConversationItem
                 key={chat.id}
                 conversation={chat}
+                refreshConversations={refreshConversations}
               />
             ))
           )}
