@@ -28,7 +28,7 @@ export default function ConversationItem({ conversation, refreshConversations })
     avatarUser = other?.user;
   }
 
-  let lastMessage = conversation.last_message?.encrypted_content ?? '';
+  let lastMessage = conversation.last_message?.content ?? '';
   if (lastMessage.length > 15) {
     lastMessage = lastMessage.slice(0, 15) + '...';
   }

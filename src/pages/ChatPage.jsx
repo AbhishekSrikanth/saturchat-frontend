@@ -71,7 +71,7 @@ export default function ChatPage() {
             messages.map((msg) => {
               const isMine = msg.sender?.id === user.id;
               const username = msg.sender?.username || 'Unknown';
-              const content = msg.encrypted_content || msg.message;
+              const content = msg.content || msg.message;
               const time = dayjs(msg.created_at || msg.timestamp).format('h:mm A');
 
               return isMine ? (
