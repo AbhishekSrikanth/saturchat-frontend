@@ -8,8 +8,9 @@ export function useUserSocket(onConversationUpdated) {
   useEffect(() => {
     if (!tokens?.access || !user?.id) return;
 
-    const socketUrl = `ws://localhost:8000/ws/user/${user.id}/?token=${tokens.access}`;
-    const socket = new WebSocket(socketUrl);
+    const baseUrl = import.meta.env.VITE_WS_BASE_URL;
+    const socketUrl = `${baseUrl}/ws/user/${user.id}`;
+    const socket = new WebSocket(socketUrl, ['access_token', tokens.access])
     socketRef.current = socket;
 
     const handleOpen = () => {

@@ -8,8 +8,9 @@ export function useChatSocket(conversationId, onMessageReceived) {
   useEffect(() => {
     if (!tokens?.access || !conversationId) return;
 
-    const socketUrl = `ws://localhost:8000/ws/chat/${conversationId}/?token=${tokens.access}`;
-    const socket = new WebSocket(socketUrl);
+    const baseUrl = import.meta.env.VITE_WS_BASE_URL;
+    const socketUrl = `${baseUrl}/ws/chat/${conversationId}`;
+    const socket = new WebSocket(socketUrl, ['access_token', tokens.access])
     socketRef.current = socket;
 
     let isUnmounted = false;
