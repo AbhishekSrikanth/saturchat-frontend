@@ -9,7 +9,7 @@ export function useChatSocket(conversationId, onMessageReceived) {
     if (!tokens?.access || !conversationId) return;
 
     const baseUrl = import.meta.env.VITE_WS_BASE_URL;
-    const socketUrl = `${baseUrl}/ws/chat/${conversationId}`;
+    const socketUrl = `${baseUrl}/ws/chat/${conversationId}/`;
     const socket = new WebSocket(socketUrl, ['access_token', tokens.access])
     socketRef.current = socket;
 

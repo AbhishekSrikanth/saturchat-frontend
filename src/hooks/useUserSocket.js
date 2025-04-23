@@ -9,7 +9,7 @@ export function useUserSocket(onConversationUpdated) {
     if (!tokens?.access || !user?.id) return;
 
     const baseUrl = import.meta.env.VITE_WS_BASE_URL;
-    const socketUrl = `${baseUrl}/ws/user/${user.id}`;
+    const socketUrl = `${baseUrl}/ws/user/${user.id}/`;
     const socket = new WebSocket(socketUrl, ['access_token', tokens.access])
     socketRef.current = socket;
 
