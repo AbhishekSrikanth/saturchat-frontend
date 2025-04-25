@@ -6,6 +6,7 @@ import ChatPage from './pages/ChatPage';
 import ProfilePage from './pages/ProfilePage';
 import PrivateRoute from './components/PrivateRoute';
 import NoConversationSelected from './components/NoConversationSelected';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   return (
