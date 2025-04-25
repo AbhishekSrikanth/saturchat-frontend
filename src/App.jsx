@@ -15,7 +15,9 @@ function App() {
           {/* Public */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          {/* Private - wrap layout in PrivateRoute */}
+          <Route path="/error" element={<ErrorPage />} />
+
+          {/* Private */}
           <Route
             path="/"
             element={
@@ -28,6 +30,9 @@ function App() {
             <Route path="chat/:conversationId" element={<ChatPage />} />
             <Route path="profile" element={<ProfilePage />} />
           </Route>
+
+          {/* Catch-all unknown routes */}
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
     </div>
