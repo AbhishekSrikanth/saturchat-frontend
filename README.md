@@ -1,12 +1,57 @@
-# React + Vite
+# SaturChat Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React-based frontend for **SaturChat**, a modern, collaborative group chat platform. It provides a clean and responsive UI with support for real-time messaging, group management, user profiles, and AI-generated responses.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Built with **React 19** and **Vite**
+- Modular real-time chat UI (WebSocket-powered)
+- User authentication via JWT
+- Profile management with API keys and avatars
+- Seamless integration with AI bots
+- TailwindCSS for styling
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Getting Started
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/AbhishekSrikanth/saturchat-frontend.git
+cd saturchat-frontend
+```
+
+### 2. Configure Environment
+
+Create a `.env.production` file with your deployment variables:
+
+```env
+VITE_API_BASE_URL=https://yourdomain.com/api
+VITE_WS_BASE_URL=wss://yourdomain.com/ws
+```
+
+### 3. Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Access the app at: `http://localhost:5173`
+
+---
+
+## Deployment Notes
+
+- NGINX should be configured to serve `index.html`.
+- Ensure proper CORS and proxy configuration for API calls and WebSocket connections.
+- This app should be used  [`saturchat-backend`](https://github.com/YOUR_USERNAME/saturchat-backend) for full-stack deployment.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
