@@ -24,13 +24,13 @@ git clone https://github.com/AbhishekSrikanth/saturchat-frontend.git
 cd saturchat-frontend
 ```
 
-### 2. Configure Environment
+### 2. Configure Environment for Development
 
-Create a `.env.production` file with your deployment variables:
+For local development, create a `.env` file:
 
 ```env
-VITE_API_BASE_URL=https://yourdomain.com/api
-VITE_WS_BASE_URL=wss://yourdomain.com/ws
+VITE_API_BASE_URL=http://localhost:8000/api
+VITE_WS_BASE_URL=ws://localhost:8000/ws
 ```
 
 ### 3. Run Locally
