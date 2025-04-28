@@ -1,12 +1,12 @@
 import api from './axios';
 
 export async function loginUser({ username, password }) {
-  const res = await api.post('/api/auth/login/', { username, password });
+  const res = await api.post('/auth/login/', { username, password });
   return res.data;
 }
 
 export async function registerUser({ username, password1, password2 }) {
-  const res = await api.post('/api/auth/register/', {
+  const res = await api.post('/auth/register/', {
     username,
     password1,
     password2,
@@ -15,13 +15,13 @@ export async function registerUser({ username, password1, password2 }) {
 }
 
 export async function getCurrentUser() {
-  const res = await api.get('/api/users/me/');
+  const res = await api.get('/users/me/');
   return res.data;
 }
 
 export async function verifyToken(accessToken) {
   try {
-    await api.post('/api/auth/token/verify/', {
+    await api.post('/auth/token/verify/', {
       token: accessToken,
     });
     return true;
@@ -34,6 +34,6 @@ export async function verifyToken(accessToken) {
 }
 
 export async function refreshToken(refresh) {
-  const res = await api.post('/api/auth/token/refresh/', { refresh });
+  const res = await api.post('/auth/token/refresh/', { refresh });
   return res.data;
 }

@@ -28,7 +28,7 @@ export default function ProfilePage() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const res = await api.get('/api/users/me/');
+        const res = await api.get('/users/me/');
         setForm({
           ...res.data,
           avatar: res.data.avatar || null,
@@ -80,7 +80,7 @@ export default function ProfilePage() {
     }
 
     try {
-      const res = await api.patch('/api/users/me/', data, {
+      const res = await api.patch('/users/me/', data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
