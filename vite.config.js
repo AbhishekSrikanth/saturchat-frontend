@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss()],
     define: {
       __WS_BASE_URL__: JSON.stringify(env.VITE_WS_BASE_URL),
+      __API_BASE_URL__: JSON.stringify(env.VITE_API_BASE_URL),
     },
   };
 });
