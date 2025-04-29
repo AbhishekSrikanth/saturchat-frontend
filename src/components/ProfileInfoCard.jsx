@@ -52,7 +52,7 @@ export default function ProfileInfoCard({ form, setForm, handleChange }) {
           <button
             type="button"
             onClick={openFileDialog}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800 cursor-pointer"
           >
             <FontAwesomeIcon icon="fa-upload" />
             Upload
@@ -62,14 +62,14 @@ export default function ProfileInfoCard({ form, setForm, handleChange }) {
             <button
               type="button"
               onClick={openFileDialog}
-              className="flex items-center gap-2 px-3 py-1 rounded-full bg-black text-white text-xs hover:bg-gray-800"
+              className="flex items-center gap-2 px-3 py-1 rounded-full bg-black text-white text-xs hover:bg-gray-800 cursor-pointer"
             >
               <FontAwesomeIcon icon="fa-pen" />
             </button>
             <button
               type="button"
               onClick={handleRemoveAvatar}
-              className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-500 text-white text-xs hover:bg-red-600"
+              className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-500 text-white text-xs hover:bg-red-600 cursor-pointer"
             >
               <FontAwesomeIcon icon="fa-trash" />
             </button>

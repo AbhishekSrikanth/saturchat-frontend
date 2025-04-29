@@ -124,7 +124,7 @@ export default function ProfilePage() {
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
           <button
             type="submit"
-            className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800"
+            className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 cursor-pointer"
           >
             Save Changes
           </button>

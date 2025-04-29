@@ -29,7 +29,7 @@ export default function ProfileMenu() {
       {/* Avatar Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-10 h-10 rounded-full bg-black text-white font-semibold flex items-center justify-center hover:bg-gray-800 shadow-lg"
+        className="w-10 h-10 rounded-full bg-black text-white font-semibold flex items-center justify-center hover:bg-gray-800 shadow-lg cursor-pointer"
       >
         <Avatar user={user} size="w-10 h-10" textSize="text-base" />
       </button>
@@ -42,13 +42,13 @@ export default function ProfileMenu() {
               navigate('/profile');
               setOpen(false);
             }}
-            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:rounded-t-lg"
+            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:rounded-t-lg cursor-pointer"
           >
             Profile
           </button>
           <button
             onClick={handleLogout}
-            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-200 hover:rounded-b-lg"
+            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-200 hover:rounded-b-lg cursor-pointer"
           >
             Log out
           </button>
