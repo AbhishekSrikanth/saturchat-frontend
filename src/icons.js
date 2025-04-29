@@ -1,6 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faEllipsisVertical, // <-- Add this
+  faEllipsisVertical,
   faPlus,
   faRightFromBracket,
   faUser,
@@ -8,6 +8,7 @@ import {
   faUpload,
   faPen,
   faTrash,
+  faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -18,5 +19,6 @@ library.add(
   faUpload,
   faPen,
   faTrash,
-  faEllipsisVertical
+  faEllipsisVertical,
+  faUserGroup
 );
