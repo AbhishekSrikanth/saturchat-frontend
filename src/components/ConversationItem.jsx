@@ -6,6 +6,7 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../context/useAuth';
 import Avatar from './Avatar';
 import ManageConversationModal from './manageConversation/ManageConversationModal';
+import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
 
 export default function ConversationItem({ conversation, refreshConversations }) {
   const { user } = useAuth();
@@ -49,7 +50,12 @@ export default function ConversationItem({ conversation, refreshConversations })
         <NavLink to={`/chat/${conversation.id}`} className="flex items-center gap-3 flex-1 overflow-hidden">
           <Avatar user={avatarUser} />
           <div className="flex flex-col overflow-hidden">
-            <span className="font-semibold text-sm truncate">{displayName}</span>
+            <span className="font-semibold text-sm truncate">
+              {conversation.is_group && (
+                <FontAwesomeIcon icon={faUserGroup} className="mr-1 text-xs" />
+              )}
+              {displayName}
+            </span>
             {lastMessage && (
               <span className={`text-xs truncate ${isActive ? 'text-gray-300' : 'text-gray-500'}`}>
                 {conversation.last_message?.sender?.id === user.id ? 'You: ' : ''}
