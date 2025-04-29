@@ -107,6 +107,7 @@ export default function ManageConversationModal({ isOpen, onClose, conversation,
               onAdd={handleAddParticipants}
               selected={selected}
               onRemoveSelected={handleRemoveSelectedUser}
+              participants={conversation.participants}
             />
 
             <hr className="border-gray-300" />

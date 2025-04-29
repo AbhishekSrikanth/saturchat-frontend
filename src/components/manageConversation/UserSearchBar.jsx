@@ -2,14 +2,24 @@ import { useEffect, useState } from 'react';
 import { searchUsers } from '../../services/chat';
 import UserChip from '../UserChip';
 
-export default function UserSearchBar({ onAdd, onSelect, selected, onRemoveSelected }) {
+export default function UserSearchBar({
+  onAdd,
+  onSelect,
+  selected,
+  onRemoveSelected,
+  participants = [],
+}) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (query.length >= 3) {
-        searchUsers(query).then(setResults).catch(console.error);
+        searchUsers(query)
+          .then(setResults)
+          .catch(console.error);
+      } else {
+        setResults([]);
       }
     }, 300);
     return () => clearTimeout(timer);
@@ -20,6 +30,11 @@ export default function UserSearchBar({ onAdd, onSelect, selected, onRemoveSelec
     setQuery('');
     setResults([]);
   };
+
+  // filter out any user who's already a participant
+  const filteredResults = results.filter(
+    (u) => !participants.some((p) => p.user.id === u.id)
+  );
 
   return (
     <div>
@@ -32,7 +47,7 @@ export default function UserSearchBar({ onAdd, onSelect, selected, onRemoveSelec
           className="flex-1 px-4 py-2 bg-gray-100 rounded-full text-sm outline-none"
         />
         <button
-          onClick={() => onAdd()} // external "Add" action handled by parent
+          onClick={() => onAdd()}
           className="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 disabled:opacity-50 cursor-pointer"
           disabled={selected.length === 0}
         >
@@ -40,10 +55,14 @@ export default function UserSearchBar({ onAdd, onSelect, selected, onRemoveSelec
         </button>
       </div>
 
-      {results.length > 0 && (
+      {filteredResults.length > 0 && (
         <div className="bg-white border rounded-lg mt-2 max-h-48 overflow-y-auto shadow-sm">
-          {results.map((u) => (
-            <div key={u.id} onClick={() => handleSelect(u)} className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">
+          {filteredResults.map((u) => (
+            <div
+              key={u.id}
+              onClick={() => handleSelect(u)}
+              className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+            >
               {u.username}
             </div>
           ))}
