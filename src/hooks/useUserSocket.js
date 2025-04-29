@@ -18,12 +18,10 @@ export function useUserSocket(onConversationUpdated) {
     };
 
     const handleMessage = (event) => {
-      console.log('[UserSocket] Raw message:', event.data);
     
       try {
         const data = JSON.parse(event.data);
         if (data.type === 'conversation_updated' && onConversationUpdated) {
-          console.log('[UserSocket] Triggering onConversationUpdated');
           onConversationUpdated(data);
         }
       } catch (err) {

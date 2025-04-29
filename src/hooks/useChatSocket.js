@@ -24,7 +24,6 @@ export function useChatSocket(conversationId, onMessageReceived) {
     };
 
     const handleMessage = (event) => {
-      console.log('[ChatSocket] Raw message:', event.data);
 
       try {
         const data = JSON.parse(event.data);
