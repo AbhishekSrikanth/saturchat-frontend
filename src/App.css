@@ -22,7 +22,7 @@
     /* make it big enough to cover wide bubbles */
     transform: scale(2) rotate(0deg);
     transform-origin: center;
-    animation: spin 15s linear infinite;
+    animation: ai-border-spin 15s linear infinite;
     pointer-events: none;
     z-index: 0;
 }
@@ -41,7 +41,7 @@
     white-space: pre-wrap;
 }
 
-@keyframes spin {
+@keyframes ai-border-spin {
     0% {
         transform: scale(2) rotate(0deg);
     }
