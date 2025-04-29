@@ -84,9 +84,9 @@ export default function ChatPage() {
               return isMine ? (
                 <SentBubble key={msg.id || msg.message_id} text={content} time={time} />
               ) : isBot ? (
-                <AIReceivedBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
+                <AIReceivedBubble key={msg.id || msg.message_id} text={content} time={time} user={msg.sender} />
               ) : (
-                <ReceivedBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
+                <ReceivedBubble key={msg.id || msg.message_id} text={content} time={time} user={msg.sender} />
               );
             })
           )}
