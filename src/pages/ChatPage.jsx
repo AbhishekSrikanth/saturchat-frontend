@@ -65,7 +65,12 @@ export default function ChatPage() {
       <div className="flex flex-col flex-1 overflow-hidden">
         <div className="flex-1 overflow-y-auto p-4 space-y-4 mb-3">
           {loading ? (
-            <p className="text-sm text-gray-500">Loading messages...</p>
+            <div className="flex flex-col items-center justify-center h-full">
+              <div className="w-8 h-8 border-4 border-gray-200 border-t-black rounded-full animate-spin" />
+              <span className="mt-2 text-sm text-gray-500">
+                Loading Messages..
+              </span>
+            </div>
           ) : messages.length === 0 ? (
             <p className="text-sm text-gray-500">No messages yet.</p>
           ) : (
@@ -76,13 +81,13 @@ export default function ChatPage() {
               const content = msg.content || msg.message;
               const time = dayjs(msg.created_at || msg.timestamp).format('h:mm A');
 
-                return isMine ? (
+              return isMine ? (
                 <SentBubble key={msg.id || msg.message_id} text={content} time={time} />
-                ) : isBot ? (
+              ) : isBot ? (
                 <AIReceivedBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
-                ) : (
+              ) : (
                 <ReceivedBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
-                );
+              );
             })
           )}
           <div ref={bottomRef} />
