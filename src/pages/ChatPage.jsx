@@ -6,6 +6,7 @@ import { useChatSocket } from '../hooks/useChatSocket';
 import NoConversationSelected from '../components/NoConversationSelected';
 import SentBubble from '../components/SentBubble';
 import ReceivedBubble from '../components/ReceivedBubble';
+import AIReceivedBubble from '../components/AIReceivedBubble';
 import dayjs from 'dayjs';
 
 
@@ -70,15 +71,18 @@ export default function ChatPage() {
           ) : (
             messages.map((msg) => {
               const isMine = msg.sender?.id === user.id;
+              const isBot = msg.sender?.is_bot;
               const username = msg.sender?.username || 'Unknown';
               const content = msg.content || msg.message;
               const time = dayjs(msg.created_at || msg.timestamp).format('h:mm A');
 
-              return isMine ? (
+                return isMine ? (
                 <SentBubble key={msg.id || msg.message_id} text={content} time={time} />
-              ) : (
+                ) : isBot ? (
+                <AIReceivedBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
+                ) : (
                 <ReceivedBubble key={msg.id || msg.message_id} text={content} time={time} username={username} />
-              );              
+                );
             })
           )}
           <div ref={bottomRef} />

@@ -7,6 +7,7 @@ import ProfilePage from './pages/ProfilePage';
 import PrivateRoute from './components/PrivateRoute';
 import NoConversationSelected from './components/NoConversationSelected';
 import ErrorPage from './pages/ErrorPage';
+import './App.css';
 
 function App() {
   return (
