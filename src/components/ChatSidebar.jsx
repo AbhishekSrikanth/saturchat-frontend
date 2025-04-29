@@ -40,7 +40,7 @@ export default function ChatSidebar({ conversations, refreshConversations }) {
           <span className="text-sm font-medium text-gray-700">Conversations</span>
           <button
             onClick={() => setModalOpen(true)}
-            className="text-black text-2xl hover:text-gray-700 transition duration-200"
+            className="text-black text-2xl hover:text-gray-700 transition duration-200 cursor-pointer"
           >
             <FontAwesomeIcon icon="fa-solid fa-circle-plus" />
           </button>

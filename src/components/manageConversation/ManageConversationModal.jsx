@@ -114,8 +114,8 @@ export default function ManageConversationModal({ isOpen, onClose, conversation,
             <div className="flex flex-col gap-4">
               <ActionButton onClick={handleDelete}>Delete Conversation</ActionButton>
               <div className="flex gap-2">
-                <button onClick={onClose} className="w-full py-2 rounded-full border text-sm hover:bg-gray-100">Close</button>
-                <button onClick={handleUpdate} className="w-full py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800">Save</button>
+                <button onClick={onClose} className="w-full py-2 rounded-full border text-sm hover:bg-gray-100 cursor-pointer">Close</button>
+                <button onClick={handleUpdate} className="w-full py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800 cursor-pointer">Save</button>
               </div>
             </div>
           </>

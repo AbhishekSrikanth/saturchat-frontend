@@ -25,7 +25,7 @@ export default function AvatarEditor({ preview, setPreview, setFile }) {
         <div className="flex gap-2">
           <label htmlFor="group-avatar" className="bg-black text-white text-xs px-3 py-1 rounded-full cursor-pointer">Upload</label>
           {preview && (
-            <button onClick={handleRemove} className="bg-red-500 text-white text-xs px-3 py-1 rounded-full">Remove</button>
+            <button onClick={handleRemove} className="bg-red-500 text-white text-xs px-3 py-1 rounded-full cursor-pointer">Remove</button>
           )}
         </div>
       </div>

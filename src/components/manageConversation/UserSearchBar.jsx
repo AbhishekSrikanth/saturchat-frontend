@@ -33,7 +33,7 @@ export default function UserSearchBar({ onAdd, onSelect, selected, onRemoveSelec
         />
         <button
           onClick={() => onAdd()} // external "Add" action handled by parent
-          className="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 disabled:opacity-50"
+          className="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 disabled:opacity-50 cursor-pointer"
           disabled={selected.length === 0}
         >
           Add

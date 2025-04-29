@@ -6,7 +6,7 @@ export default function UserChip({ user, onRemove, isRemovable = false }) {
         <Avatar user={user} size="w-6 h-6" />
         {user.username}
         {isRemovable && (
-          <button onClick={() => onRemove(user.id)} className="font-bold">×</button>
+          <button onClick={() => onRemove(user.id)} className="font-bold cursor-pointer">×</button>
         )}
       </span>
     );
